@@ -1,114 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>עד מתי וכמה עוד?!</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>עד מתי וכמה עוד?!</title>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Roboto, sans-serif;
-      background-size: cover;
-      background-position: center;
-      text-align: center;
-      color: #fff;
-      text-shadow: 4px 4px 8px #000;
-    }
-
-    #timer-text {
-      font-size: 4em;
-      margin: 0;
-    }
-
-    #timer2-text {
-      font-size: 2em;
-      margin-top: 10px;
-      margin-bottom: 0;
-    }
-
-    #timer {
-      font-size: 6em;
-    }
-
-    #timer2 {
-      font-size: 2em;
-    }
-  </style>
-</head>
-
-<body>
-  <p id="timer-text">עד לקבלת הדרגות</p>
-  <div id="timer"></div>
-
-  <p id="timer2-text">עד לעלייה על השאטלים</p>
-  <div id="timer2"></div>
-
-  <div id="soundDiv">
-
-  </div>
-
-
-  <script>
-    const sound = require("./he-he-he-ha-clash-royale-deep-fried.mp3")
-    const soundDiv = document.getElementById("soundDiv");
-    soundDiv.innerHTML = `<audio controls loop autoplay style="visibility: hidden">
-      <source src="${sound}"" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>`
-    function setRandomBackground() {
-      const gifs = [
-        "PHOTO-2024-04-09-18-25-11.jpg",
-        "https://media1.tenor.com/m/K4xB25ACa5kAAAAd/ocean-ocean-meme.gif",
-        "https://i.pinimg.com/originals/09/cd/4c/09cd4cd8819c209bd3b31955293b86df.gif",
-        "https://i.pinimg.com/originals/34/95/62/349562dfd2d9bb15f22cf7c828dedaba.gif",
-        "https://i.pinimg.com/originals/95/c1/d0/95c1d00ac3ecdebc2277d33d47b0d637.gif",
-      ];
-      const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
-      document.body.style.backgroundImage = `url(${randomGif})`;
-    }
-
-    function countdown(timerId, eventDate) {
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = eventDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor(
-          (distance % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById(timerId).innerHTML =
-          (hours + days * 24).toString().padStart(2, "0") +
-          ":" +
-          minutes.toString().padStart(2, "0") +
-          ":" +
-          seconds.toString().padStart(2, "0");
-
-        if (distance < 0) {
-          clearInterval(interval);
-          document.getElementById(timerId).innerHTML = "EXPIRED";
-        }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Roboto, sans-serif;
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        color: #fff;
+        text-shadow: 4px 4px 8px #000;
       }
-      updateCountdown();
-      const interval = setInterval(updateCountdown, 1000);
-    }
 
-    setRandomBackground();
-    countdown("timer", new Date("July 10, 2024 18:30:00").getTime());
-    countdown("timer2", new Date("July 11, 2024 14:00:00").getTime());
-  </script>
-</body>
+      #timer-text {
+        font-size: 4em;
+        margin: 0;
+      }
 
+      #timer2-text {
+        font-size: 2em;
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+
+      #timer {
+        font-size: 6em;
+      }
+
+      #timer2 {
+        font-size: 2em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p id="timer-text">עד לקבלת הדרגות</p>
+    <div id="timer"></div>
+
+    <p id="timer2-text">עד לעלייה על השאטלים</p>
+    <div id="timer2"></div>
+
+    <!-- <audio controls loop autoplay style="visibility: hidden">
+      <source src="" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio> -->
+
+    <script>
+      const soundFile = document.createElement("audio");
+      soundFile.preload = "auto";
+
+      //Load the sound file (using a source element for expandability)
+      var src = document.createElement("source");
+      src.src = "./he-he-he-ha-clash-royale-deep-fried.mp3";
+      soundFile.appendChild(src);
+
+      //Load the audio tag
+      //It auto plays as a fallback
+      soundFile.load();
+      soundFile.volume = 1;
+      soundFile.play();
+
+      function setRandomBackground() {
+        const gifs = [
+          "PHOTO-2024-04-09-18-25-11.jpg",
+          "https://media1.tenor.com/m/K4xB25ACa5kAAAAd/ocean-ocean-meme.gif",
+          "https://i.pinimg.com/originals/09/cd/4c/09cd4cd8819c209bd3b31955293b86df.gif",
+          "https://i.pinimg.com/originals/34/95/62/349562dfd2d9bb15f22cf7c828dedaba.gif",
+          "https://i.pinimg.com/originals/95/c1/d0/95c1d00ac3ecdebc2277d33d47b0d637.gif",
+        ];
+        const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
+        document.body.style.backgroundImage = `url(${randomGif})`;
+      }
+
+      function countdown(timerId, eventDate) {
+        function updateCountdown() {
+          const now = new Date().getTime();
+          const distance = eventDate - now;
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          document.getElementById(timerId).innerHTML =
+            (hours + days * 24).toString().padStart(2, "0") +
+            ":" +
+            minutes.toString().padStart(2, "0") +
+            ":" +
+            seconds.toString().padStart(2, "0");
+
+          if (distance < 0) {
+            clearInterval(interval);
+            document.getElementById(timerId).innerHTML = "EXPIRED";
+          }
+        }
+        updateCountdown();
+        const interval = setInterval(updateCountdown, 1000);
+      }
+
+      setRandomBackground();
+      countdown("timer", new Date("July 10, 2024 18:30:00").getTime());
+      countdown("timer2", new Date("July 11, 2024 14:00:00").getTime());
+    </script>
+  </body>
 </html>
